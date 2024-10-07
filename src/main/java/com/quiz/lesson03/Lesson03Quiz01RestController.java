@@ -11,7 +11,7 @@ import com.quiz.lesson03.bo.RealEstateBO;
 import com.quiz.lesson03.domain.RealEstate;
 
 @RestController // Controller + ResponseBody
-@RequestMapping("/lesson03/quiz01")	 // 공통 경로 
+@RequestMapping("/lesson03/quiz01")	 // 공통 경로 위로 뺌  
 public class Lesson03Quiz01RestController {
 
 	@Autowired // 의존성 주입 
@@ -22,11 +22,11 @@ public class Lesson03Quiz01RestController {
 	@RequestMapping("/1")	
 	public RealEstate quiz01_1(
 			@RequestParam("id") int id){
-		return realEstateBO.getRealEstateById(id);
+		return realEstateBO.getRealEstateById(id); // id를 넘겨 줄테니 값을 가져와 
 	}
 	// http://localhost:8080/lesson03/quiz01/2?rent_price=90
 	@RequestMapping("/2")	
-	public List<RealEstate> quiz01_2 (
+	public List<RealEstate> quiz01_2 ( // 여러 건 List로 생성 
 		@RequestParam(value = "rent_price") int rentPrice		
 			) {
 		return realEstateBO.getRealEstateListByRentPrice(rentPrice); 

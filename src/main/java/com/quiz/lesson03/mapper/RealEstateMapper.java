@@ -26,5 +26,18 @@ public interface RealEstateMapper {
 			// Param("") <= 는 xml의 #{}와 연결
 			@Param("area") int area, 
 			@Param("price") int price);
-
+	
+	// input : RealEstate 
+	// output : int 
+	public int insertRealEstate(RealEstate realEstate);
+	
+	// input : 파라미터
+	// output : int 
+	public int insertRealEstateAsField(
+			@Param("realtorId") int realtorId,
+			@Param("address") String address,
+			@Param("area") int area,
+			@Param("type") String type,
+			@Param("price") int price,
+			@Param("rentPrice") Integer rentPrice);
 }
