@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>OO마켓 - 판매자 추가</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #17a2b8;
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #138496;
+        }
+        .form-control {
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>판매자 추가</h1>
+        <form method="post" action="/lesson04/quiz01/add-seller">
+            <!-- 닉네임 입력 -->
+            <div class="form-group">
+                <label for="nickname">닉네임</label>
+                <input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임을 입력하세요" required>
+            </div>
+            
+            <!-- 프로필 이미지 URL 입력 -->
+            <div class="form-group">
+                <label for="profileImageUrl">프로필 사진 URL</label>
+                <input type="text" id="profileImageUrl" name="profileImageUrl" class="form-control" placeholder="프로필 이미지 URL을 입력하세요" required>
+            </div>
+
+            <!-- 온도 입력 -->
+            <div class="form-group">
+                <label for="temperature">온도</label>
+                <input type="number" step="0.1" id="temperature" name="temperature" class="form-control" placeholder="온도를 입력하세요" max="36.5" required>
+            </div>
+
+            <!-- 전송 버튼 -->
+            <button type="submit" class="btn btn-custom">판매자 추가</button>
+        </form>
+    </div>
+    
+    <script>
+        // 온도 입력값이 36.5도를 넘지 않도록 제한하는 JavaScript
+        document.getElementById("temperature").addEventListener("input", function() {
+            const maxTemperature = 36.5;
+            let value = parseFloat(this.value);
+            if (value > maxTemperature) {
+                this.value = maxTemperature;
+            }
+        });
+    </script>
+</body>
+</html>
