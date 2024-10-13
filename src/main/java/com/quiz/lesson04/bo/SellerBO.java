@@ -1,9 +1,9 @@
 package com.quiz.lesson04.bo;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.quiz.lesson04.domain.Seller;
 import com.quiz.lesson04.mapper.SellerMapper;
 
 @Service  // 이 클래스가 서비스 레이어에서 동작하는 Spring의 서비스 컴포넌트임을 나타냄
@@ -20,5 +20,13 @@ public class SellerBO {
 
         // 받은 판매자 정보를 DB에 삽입하기 위해 매퍼의 insertSeller 메소드를 호출
         sellerMapper.insertSeller(nickname, profileImageUrl, temperature);
+    }
+    
+    public Seller getLatestSeller() {
+    	return sellerMapper.selectLatestSeller();
+    }
+    
+    public Seller getSellerById(int id) {
+    	return sellerMapper.selectSellerById(id);
     }
 }

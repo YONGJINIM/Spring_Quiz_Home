@@ -3,6 +3,8 @@ package com.quiz.lesson04.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.quiz.lesson04.domain.Seller;
+
 @Mapper  // MyBatis 매퍼 인터페이스임을 나타냄
 public interface SellerMapper {
 
@@ -13,5 +15,11 @@ public interface SellerMapper {
     public void insertSeller(
             @Param("nickname") String nickname,  // DB에 삽입할 판매자의 닉네임
             @Param("profileImageUrl") String profileImageUrl,  // DB에 삽입할 판매자의 프로필 이미지 URL
-            @Param("temperature") Double temperature);  // DB에 삽입할 판매자의 온도 (신뢰도)
+            @Param("temperature") double temperature);  // DB에 삽입할 판매자의 온도 (신뢰도)
+
+    // input : X
+    // output : Seller 
+    public Seller selectLatestSeller();
+    
+    public Seller selectSellerById(int id);
 }
