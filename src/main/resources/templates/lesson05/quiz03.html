@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>Quiz03</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<h1>회원 정보 리스트</h1>
+		
+		<table class="table text-center">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>이름</th>
+					<th>생년월일</th>
+					<th>전화번호</th>
+					<th>국적</th>
+					<th>이메일</th>
+					<th>자기소개</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member, status : ${members}">
+					<td th:text="${status.count}">No</td>
+					<td th:text="${member.name}">이름</td>
+					<td th:text="${#temporals.format(member.birth, 'yyy년 M월 d일')}">생년월일</td>
+					<td>
+						<span th:if="${member.phoneNumber.startsWith('010')}" th:text="${member.phoneNumber}"></span>
+						<span th:unless="${member.phoneNumber.startsWith('010')}">유효하지 않은 전화번호</span>
+					</td>
+					<td th:text="${member.nationality.replace('삼국시대', '삼국 - ')}">국적</td>
+					<td>
+						<b th:text="${member.email.split('@')[0]}"></b><span th:text="'@' + ${#strings.arraySplit(member.email, '@')[1]}"></span>
+					</td>
+					<td class="text-left">
+						<span th:if="${member.introduce.length() > 15}" th:text="${member.introduce.substring(0, 15) + '...'}"></span>
+						<span th:unless="${member.introduce.length() > 15}" th:text="${member.introduce}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

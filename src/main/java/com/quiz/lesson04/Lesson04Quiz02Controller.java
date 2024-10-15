@@ -13,19 +13,21 @@ import com.quiz.lesson04.domain.Realtor;
 
 import ch.qos.logback.core.joran.spi.ConsoleTarget;
 
-@Controller
-@RequestMapping("/lesson04/quiz02")
+@Controller // 스프링 빈 등록 
+@RequestMapping("/lesson04/quiz02") // 공통 경로
 public class Lesson04Quiz02Controller {
 
-	@Autowired
+	@Autowired //의존성 주입
 	private RealtorBO realtorBO;
 	
+	// 공인중개사 추가 화면  
 	// http://localhost:8080/lesson04/quiz02/add-realtor-view
 	@GetMapping("/add-realtor-view")
 	public String addRealtorView() {
 		return "lesson04/addRealtor";
 	}
 
+	// 공인중개사 추가 => 최신 가입자 화면
 	@PostMapping("/add-realtor")
 	public String addRealtor(@ModelAttribute Realtor realtor,
 			Model model) {
@@ -39,7 +41,7 @@ public class Lesson04Quiz02Controller {
 		// Model		
 		model.addAttribute("realtor", latestRealtor);
 		
-		
+		// View 화면 
 		return "lesson04/afterAddRealtor";
 	}	
 }
