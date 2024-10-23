@@ -15,14 +15,23 @@ public class BookmarkBO {
 	@Autowired
 	private BookmarkMapper bookmarkMapper;
 	
-	public void addBookmark(
-			String name,
-			String url) {
+	public void addBookmark(String name, String url) {
 		bookmarkMapper.insertBookmark(name, url);
-		
 	}
 	
-	public List<Bookmark> selectBookmarkList() {
+	public List<Bookmark> getBookmarkList() {
 		return bookmarkMapper.selectBookmarkList();
+	}
+	
+	// output: boolean
+	public boolean isDuplicateUrl(String url) {
+		List<Bookmark> bookmarkList = bookmarkMapper.selectBookmarkByUrl(url);
+		
+		// 비어있으면 중복이 아니므로, empty true => false
+		return bookmarkList.isEmpty() == false;
+	}
+	
+	public int deleteBookmarkById(int id) {
+		return bookmarkMapper.deleteBookmarkById(id);
 	}
 }

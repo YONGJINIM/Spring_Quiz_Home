@@ -8,6 +8,7 @@ public class Bookmark {
 	private String url;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,4 +40,3 @@ public class Bookmark {
 		this.updatedAt = updatedAt;
 	}
 }
-
