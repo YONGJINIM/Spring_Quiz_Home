@@ -39,7 +39,8 @@ public class BookingBO {
 	// input: name, phoneNumber
 	// output: Booking(최신 1개) or null
 	public Booking getLatestBookingByNamePhoneNumber(
-			String name, String phoneNumber) {
+			String name, 
+			String phoneNumber) {
 		
 		List<Booking> bookingList = bookingMapper.selectBookingListByNamePhoneNumber(name, phoneNumber);
 		// [1, 2, 3] or [1]

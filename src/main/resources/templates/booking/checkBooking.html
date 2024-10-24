@@ -93,11 +93,11 @@
 					, success:function(data) {
 						if (data.code == 200) {
 							alert(
-							"이름:" + data.booking.name + "\n"+
-							"날짜:" + data.booking.date + "\n"+
-							"일수:" + data.booking.day + "\n"+
-							"인원:" + data.booking.headcount + "\n"+
-							"상태:" + data.booking.state);
+							"이름 : " + data.booking.name + "\n"+
+							"날짜 : " + data.booking.date + "\n"+
+							"일수 : " + data.booking.day + "\n"+
+							"인원 : " + data.booking.headcount +"\n"+
+							"상태 : " + data.booking.state);
 						}else if(data.code == 500){
 							alert(data.error_message)
 						}
