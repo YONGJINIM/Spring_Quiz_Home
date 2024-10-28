@@ -12,10 +12,13 @@
 	<div class="container">
 		<h1>즐겨찾기 추가하기</h1>
 		
+		<!-- 즐겨찾기 제목 입력 필드 -->
 		<div class="form-group">
 			<label for="name">제목</label>
 			<input type="text" id="name" class="form-control">
 		</div>
+		
+		<!-- 즐겨찾기 URL 입력 필드, 중복 확인 버튼 포함 -->
 		<div class="form-group">
 			<label for="url">URL</label>
 			
@@ -24,9 +27,12 @@
 				<button type="button" id="checkBtn" class="btn btn-info">중복확인</button>
 			</div>
 			
+			<!-- URL 중복 시, 또는 사용 가능할 때 표시할 메시지 -->
 			<small id="duplicateText" class="text-danger d-none">중복된 URL 입니다.</small>
 			<small id="availableText" class="text-success d-none">저장 가능한 URL 입니다.</small>
 		</div>
+		
+		<!-- 즐겨찾기를 추가하는 버튼 -->
 		<button id="addBtn" type="button" class="btn btn-success btn-block">추가</button>
 	</div>
 	
@@ -35,92 +41,94 @@
 			// URL 중복확인
 			$("#checkBtn").on('click', function() {
 				//alert("중복");
-				let url = $("#url").val().trim();
 				
-				// validation
+				let url = $("#url").val().trim(); // URL 입력값을 가져오고 앞뒤 공백 제거
+				
+				// 유효성 검사
 				if (!url) {
-					alert("주소를 입력하세요");
+					alert("주소를 입력하세요"); // URL 입력이 비어있을 경우 알림
 					return;
 				}
 				
 				$.ajax({
-					// request
-					type:"POST"
-					, url:"/lesson06/quiz01/is-duplicate-url"
-					, data:{"url":url}
+					// 요청
+					type: "POST", // 데이터를 전송할 HTTP 메서드
+					url: "/lesson06/quiz01/is-duplicate-url", // URL 중복 확인을 위한 엔드포인트
+					data: {"url": url}, // 서버로 전송할 데이터, 여기서는 URL만 보냄
 					
-					// response
-					, success:function(data) { // string -> parsing -> dictionary
-						// {"code":200, "is_duplicate":true}
+					// 응답
+					success: function(data) { // 서버 응답 처리
+						// {"code":200, "is_duplicate":true} - 예상 응답 데이터 형식
 						if (data.is_duplicate) {
 							// 중복일 때
-							$("#duplicateText").removeClass("d-none");
-							$("#availableText").addClass("d-none");
+							$("#duplicateText").removeClass("d-none"); // 중복 경고 메시지 표시
+							$("#availableText").addClass("d-none"); // 사용 가능 메시지 숨김
 						} else {
 							// 중복아님 -> 사용 가능
-							$("#duplicateText").addClass("d-none");
-							$("#availableText").removeClass("d-none");
+							$("#duplicateText").addClass("d-none"); // 중복 경고 메시지 숨김
+							$("#availableText").removeClass("d-none"); // 사용 가능 메시지 표시
 						}
-					}
-					, error:function(e) {
-						alert("중복확인에 실패했습니다.");
+					},
+					error: function(e) {
+						alert("중복확인에 실패했습니다."); // 요청 중 오류 발생 시 알림
 					}
 				});
 			});
 			
-			// 추가
+			// 추가 - 즐겨찾기를 시스템에 추가
 			$("#addBtn").on('click', function(e) {
 				//alert("추가");
-				// validation
-				let name = $("#name").val().trim();
-				let url = $("#url").val().trim();
 				
+				// 유효성 검사
+				let name = $("#name").val().trim(); // 제목 입력값을 가져오고 앞뒤 공백 제거
+				let url = $("#url").val().trim(); // URL 입력값을 가져오고 앞뒤 공백 제거
+				
+				// 제목이 비어있는지 확인
 				if (!name) {
-					alert("이름을 입력하세요.");
+					alert("이름을 입력하세요."); // 제목이 비어있을 경우 알림
 					return;
 				}
 				
+				// URL이 비어있는지 확인
 				if (!url) {
-					alert("주소를 입력하세요");
+					alert("주소를 입력하세요"); // URL이 비어있을 경우 알림
 					return;
 				}
 				
-				// 주소 http, https
-				// http도 아니고, https도 아니고 => 잘못된 주소
+				// URL 형식 검사 (http:// 또는 https://로 시작해야 함)
 				if (url.startsWith("http://") == false 
 						&& url.startsWith("https://") == false) {
-					alert("주소 형식이 잘못되었습니다.");
+					alert("주소 형식이 잘못되었습니다."); // URL 형식이 잘못된 경우 알림
 					return;
 				}
 				
-				// 중복확인 여부
-				// availableText에 d-none이 있으면 가입 불가
+				// 중복확인 여부 - 중복 확인이 완료되었는지 확인
+				// availableText에 d-none 클래스가 있으면 중복 확인이 완료되지 않음
 				if ($("#availableText").hasClass("d-none")) {
-					alert("url 중복확인을 해주세요.");
+					alert("url 중복확인을 해주세요."); // 중복 확인이 완료되지 않았을 경우 알림
 					return;
 				}
 				
-				
-				// AJAX 통신
+				// AJAX 통신 - 즐겨찾기 데이터를 서버에 전송하여 저장
 				$.ajax({
-					// request
-					type:"POST"
-					, url:"/lesson06/quiz01/add-bookmark"
-					, data:{"name":name, "url":url}
+					// 요청
+					type: "POST", // 데이터를 전송할 HTTP 메서드
+					url: "/lesson06/quiz01/add-bookmark", // 즐겨찾기 추가 엔드포인트
+					data: {"name": name, "url": url}, // 서버로 전송할 데이터: 제목과 URL
 					
-					// response - callback
-					, success:function(data) { // AJAX 응답은 String => jquery의 함수가 JSON임을 알면 => dictionary
+					// 응답 - 콜백
+					success: function(data) { // 서버 응답 처리
 						//alert(data.code);
 						if (data.code == 200) {
-							// 화면 이동
+							// 화면 이동 - 추가 성공 시 화면 이동
 							location.href = "/lesson06/quiz01/bookmark-list-view";
 						} else {
-							// 로직상 실패
-							alert(data.error_message); // 에러 원인
+							// 로직상 실패 - 서버 로직 문제로 추가 실패
+							alert(data.error_message); // 서버에서 보낸 에러 메시지 표시
 						}
-					}
-					, error:function(e) {
-						alert("추가하는데 실패했습니다.");
+					},
+					error: function(e) {
+						alert("추가하는데 실패했습니다."); // 요청 중 오류 발생 시 알림
 					}
 				});
 			});
